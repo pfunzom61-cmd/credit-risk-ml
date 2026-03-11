@@ -1,0 +1,18 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter checkpoints
+.ipynb_checkpoints
+
+# Environment variables
+.env
+
+# Generated data
+data/processed/
+
+# Saved models
+models/
