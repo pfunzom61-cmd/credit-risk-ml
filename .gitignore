@@ -1,18 +1,63 @@
-# Virtual environment
-venv/
+# ======================
+# Python environments
+# ======================
 
+venv/
+.env/
+.envrc
+
+# ======================
 # Python cache
+# ======================
+
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# Jupyter checkpoints
-.ipynb_checkpoints
+# ======================
+# Jupyter Notebook autosaves
+# ======================
 
+.ipynb_checkpoints/
+
+# ======================
 # Environment variables
+# ======================
+
 .env
 
-# Generated data
+# ======================
+# Raw datasets
+# ======================
+
+Data/Raw/
+
+# ======================
+# Processed datasets
+# ======================
+
 data/processed/
 
-# Saved models
+# ======================
+# Model artifacts
+# ======================
+
 models/
+outputs/
+artifacts/
+checkpoints/
+
+# ======================
+# Logs & temp files
+# ======================
+
+*.log
+*.tmp
+
+# ======================
+# OS junk files
+# ======================
+
+.DS_Store
+Thumbs.db
