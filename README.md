@@ -25,31 +25,6 @@ This repository reflects workflows commonly used in credit risk analytics teams.
 
 ## Architecture
 
-```mermaid
-graph TD;
-    RawData(.csv files in Data/Raw/) -->|Ingestion Python Script| PostgreSql[(PostgreSQL Staging DB)];
-    PostgreSql -->|Feature Engineering SQL| FeaturesDB[(Features Database)];
-    FeaturesDB -->|Scikit-Learn/XGBoost| ModelTraining(Model Training & Tuning);
-    ModelTraining -->|Generate Artifacts| Artifacts(Save Code/Parameters);
-    
-    Users((User)) -->|Input Data| Streamlit[Streamlit Web App];
-    Artifacts -->|Load Model| Streamlit;
-    Streamlit -->|Output Prediction| Users;
-
-    subgraph Data Engineering (Current Focus)
-    RawData
-    PostgreSql
-    end
-
-    subgraph MLOps & Frontend (Planned)
-    FeaturesDB
-    ModelTraining
-    Streamlit
-    end
-
-    style RawData fill:#f9f,stroke:#333,stroke-width:2px;
-    style Streamlit fill:#ccf,stroke:#f66,stroke-width:2px,color:#fff;
-
 The project follows a layered data pipeline structure:
 
 Raw CSV Files
