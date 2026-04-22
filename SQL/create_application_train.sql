@@ -124,5 +124,16 @@ CREATE TABLE application_train (
     amt_req_credit_bureau_year NUMERIC(14,3)
 );
 
-SELECT COUNT(*) FROM application_train;
+// Created a Staging Schema to store all staged tables here.
+
+CREATE SCHEMA IF NOT EXISTS staging;
+CREATE SCHEMA IF NOT EXISTS clean;
+CREATE SCHEMA IF NOT EXISTS features;
+
+ALTER TABLE application_train
+SET SCHEMA staging;
+
+SELECT * FROM staging.application_train LIMIT 5;
+
+SELECT COUNT(*) FROM staging.application_train;
 

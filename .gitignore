@@ -1,63 +1,43 @@
 # ======================
-# Python environments
+# Environments & Dependencies
 # ======================
-
 venv/
-.env/
+.venv/
+env/
+# Ignore all installed packages
+bin/
+lib/
+# Local environment variables
+.env
 .envrc
 
 # ======================
-# Python cache
+# Data & Database (CRITICAL)
 # ======================
+# Ignore the entire Data folder (Raw, Processed, etc.)
+Data/
+data/
+# Ignore database configuration (prevents leaking credentials)
+Config/database.yaml
+config/*.yaml
 
+# ======================
+# Python & Jupyter Junk
+# ======================
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# ======================
-# Jupyter Notebook autosaves
-# ======================
-
 .ipynb_checkpoints/
-
-# ======================
-# Environment variables
-# ======================
-
-.env
-
-# ======================
-# Raw datasets
-# ======================
-
-Data/Raw/
-
-# ======================
-# Processed datasets
-# ======================
-
-data/processed/
-
-# ======================
-# Model artifacts
-# ======================
-
-models/
-outputs/
-artifacts/
-checkpoints/
-
-# ======================
-# Logs & temp files
-# ======================
-
-*.log
-*.tmp
-
-# ======================
-# OS junk files
-# ======================
-
+# In case you use MacOS or Windows
 .DS_Store
 Thumbs.db
+
+# ======================
+# ML Artifacts & Logs
+# ======================
+Models/
+models/
+artifacts/
+*.log
+*.tmp

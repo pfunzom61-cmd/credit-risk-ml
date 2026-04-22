@@ -1,0 +1,241 @@
+# Credit Risk Machine Learning Pipeline
+
+## Overview
+
+This project implements an end-to-end credit risk prediction system designed using industry-style data engineering and machine learning practices. The objective is to estimate the probability that a loan applicant will default using structured financial history data from multiple relational sources.
+
+The system emphasizes reproducibility, modular architecture, SQL-first feature engineering, and interpretable modeling suitable for regulated financial environments.
+
+---
+
+## Project Objectives
+
+The pipeline is designed to demonstrate production-oriented skills across:
+
+* relational data ingestion
+* schema-layered warehouse design
+* SQL-based data profiling and feature engineering
+* predictive modeling for default risk
+* model interpretability using SHAP
+* deployment through an interactive prediction interface
+
+This repository reflects workflows commonly used in credit risk analytics teams.
+
+---
+
+## Architecture
+
+```mermaid
+graph TD;
+    RawData(.csv files in Data/Raw/) -->|Ingestion Python Script| PostgreSql[(PostgreSQL Staging DB)];
+    PostgreSql -->|Feature Engineering SQL| FeaturesDB[(Features Database)];
+    FeaturesDB -->|Scikit-Learn/XGBoost| ModelTraining(Model Training & Tuning);
+    ModelTraining -->|Generate Artifacts| Artifacts(Save Code/Parameters);
+    
+    Users((User)) -->|Input Data| Streamlit[Streamlit Web App];
+    Artifacts -->|Load Model| Streamlit;
+    Streamlit -->|Output Prediction| Users;
+
+    subgraph Data Engineering (Current Focus)
+    RawData
+    PostgreSql
+    end
+
+    subgraph MLOps & Frontend (Planned)
+    FeaturesDB
+    ModelTraining
+    Streamlit
+    end
+
+    style RawData fill:#f9f,stroke:#333,stroke-width:2px;
+    style Streamlit fill:#ccf,stroke:#f66,stroke-width:2px,color:#fff;
+
+The project follows a layered data pipeline structure:
+
+Raw CSV Files
+→ PostgreSQL Staging Layer (TEXT ingestion)
+→ Clean Typed Layer
+→ Feature Engineering Layer
+→ Modeling Layer
+→ Streamlit Prediction Interface
+
+### Staging Layer
+
+All datasets are ingested as TEXT to ensure ingestion reliability despite inconsistent source schemas. This mirrors industry ingestion strategies used when handling heterogeneous external datasets.
+
+Tables ingested:
+
+* application_train
+* application_test
+* bureau
+* bureau_balance
+* credit_card_balance
+* installments_payments
+* pos_cash_balance
+* previous_application
+
+---
+
+## Data Engineering Workflow
+
+Key engineering components implemented:
+
+* automated ingestion from CSV to PostgreSQL
+* schema-isolated staging environment
+* reproducible loading pipeline
+* SQL-first profiling strategy
+* layered transformation pipeline design
+
+Future layers convert raw staging tables into typed analytical feature tables.
+
+---
+
+## Feature Engineering Strategy
+
+Feature construction will combine:
+
+* application-level attributes
+* bureau credit history aggregates
+* previous loan behavior
+* installment payment patterns
+* credit utilization indicators
+
+The modeling dataset will be constructed as a single observation per applicant (SK_ID_CURR).
+
+---
+
+## Modeling Approach
+
+Models implemented:
+
+* Logistic Regression (baseline probability model)
+* Random Forest (nonlinear ensemble benchmark)
+* XGBoost (gradient boosting production candidate)
+
+Evaluation metrics:
+
+* ROC-AUC
+* Precision-Recall
+* Feature importance stability
+* Business interpretation of false positives vs false negatives
+
+Explainability:
+
+* SHAP value attribution for individual predictions
+* global feature influence analysis
+
+---
+
+## Deployment
+
+A Streamlit application will allow:
+
+* manual applicant input
+* default probability prediction
+* feature contribution interpretation
+* model transparency for decision support
+
+---
+
+## Repository Structure
+
+```
+credit-risk-ml/
+
+Data/
+ ├── raw/
+ └── processed/
+
+notebooks/
+ └── 01_data_ingestion.ipynb
+
+src/
+ ├── data/
+ ├── features/
+ └── models/
+
+sql/
+ └── staging + profiling scripts
+
+app/
+ └── streamlit interface (in progress)
+```
+
+---
+
+## Tech Stack
+
+Languages
+
+* Python
+* SQL
+
+Data Engineering
+
+* PostgreSQL
+* SQLAlchemy
+* psycopg2
+
+Machine Learning
+
+* scikit-learn
+* XGBoost
+* SHAP
+
+Visualization
+
+* Matplotlib
+* Seaborn
+
+Deployment
+
+* Streamlit
+
+Version Control
+
+* Git
+
+---
+
+## Reproducibility
+
+Steps to run the pipeline:
+
+1. Clone repository
+2. Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+3. Configure database credentials
+
+```
+Config/database.yaml
+```
+
+4. Run ingestion pipeline
+
+```
+python SRC/Data/load_raw_to_staging.py
+```
+
+---
+
+## Project Status
+
+Completed
+
+* PostgreSQL environment setup
+* staging schema design
+* ingestion pipeline (TEXT-safe architecture)
+* multi-table dataset loading
+
+In Progress
+
+* SQL data profiling layer
+* clean schema transformations
+* feature engineering pipeline
+* model training workflow
+* SHAP explainability layer
+* Streamlit deployment interface
