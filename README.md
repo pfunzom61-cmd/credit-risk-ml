@@ -210,3 +210,5 @@ python src/data/load_raw_to_staging.py
 | Model training | ⏳ Pending |
 | SHAP explainability | ⏳ Pending |
 | Streamlit deployment | ⏳ Pending |
+
+Discovered during clean layer design: application_train was ingested with an enforced schema (NUMERIC, BIGINT, VARCHAR), while all satellite tables (bureau, previous_application, installments_payments, pos_cash_balance, credit_card_balance, application_test) were ingested as pure TEXT per the original staging design decision. Clean layer logic differs accordingly — application_train requires null/sentinel handling only, satellite tables require full type casting plus null handling
